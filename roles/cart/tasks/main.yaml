@@ -1,0 +1,19 @@
+- name: insatlling and setting npm source
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: nodejs
+
+- name: settup application
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: appsetup
+
+- name: install dependencies
+  ansible.builtin.command: npm install
+  args:   
+    chdir: /app
+
+- name: copying service, daemon reload and starting and enabling service
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: systemd-setup
